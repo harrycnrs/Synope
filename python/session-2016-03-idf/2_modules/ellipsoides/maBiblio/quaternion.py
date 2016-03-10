@@ -2,6 +2,8 @@
 from __future__ import print_function
 import math
 
+__all__ = ['rotate_using_quaternion', 'rotate_using_complex']
+
 # """
 # rotation 3D d'une position à l'aide d'une représentation quaternion.
 #
