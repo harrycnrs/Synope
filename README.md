@@ -1,6 +1,6 @@
 # Synopé (satellite de Jupyter)
 
-Il s'agit principalement d'une collection de notebooks destinés à l'enseignement du
+Collection de notebooks destinés à l'enseignement du
 développement logiciel, et en premier lieu de Python. Ces notebooks ne sont pour le moment
 pas destinés à être utilisés directement par des individus anonymes, mais plutôt à être
 échangés entre formateurs, en vue de faciliter l'organisation de formations en face-à-face.
