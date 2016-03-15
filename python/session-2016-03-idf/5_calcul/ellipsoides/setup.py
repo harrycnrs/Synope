@@ -1,8 +1,8 @@
 from setuptools import setup
 
-setup(name = 'maBiblio',
+setup(name = 'ma_biblio',
       version = '1.0',
       author = 'toto',
       description = 'module de superellipsoides et quaternions',
-      packages = ['maBiblio', 'maBiblio.ellipsoides'],
+      packages = ['ma_biblio', 'ma_biblio.ellipsoides'],
   )
