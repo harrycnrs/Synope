@@ -37,5 +37,5 @@ rmax = np.max([rx, ry, rz])
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-animation.FuncAnimation(fig, animate, interval=100)
+ani = animation.FuncAnimation(fig, animate, interval=100)
 plt.show()
