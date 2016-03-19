@@ -9,6 +9,6 @@ RUN apt-get install -y git && apt-get clean
 USER main
 
 RUN pip install notebook
-RUN pip install jupyter
+RUN mkdir $HOME/.jupyter
 RUN git clone https://github.com/damianavila/RISE.git
 RUN cd RISE; python setup.py install
