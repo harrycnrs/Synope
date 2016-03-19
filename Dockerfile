@@ -1,0 +1,13 @@
+FROM andrewosh/binder-base
+
+USER main
+
+ADD environment.yml /home/main/
+
+RUN conda env create -f environment.yml
+RUN /bin/bash -c "source activate synope && ipython kernelspec install-self --user"
+RUN pip install notebook
+RUN pip install pypandoc
+RUN mkdir $HOME/.jupyter
+RUN git clone https://github.com/damianavila/RISE.git
+RUN cd RISE; python setup.py install
