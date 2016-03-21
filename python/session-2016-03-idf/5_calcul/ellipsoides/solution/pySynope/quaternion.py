@@ -1,108 +1,154 @@
 # coding: utf8
+"""
+Implémentation des quaternions
+"""
+
 from __future__ import print_function
 import numpy as np
 import math
 
 def sign(a):
-  if a < 0:
-    return '-'
-  else:
-    return '+'
+    """
+    retourne le caractère ascii '+' ou '-'
+    en fonction du signe de a
+    """ 
+    if a < 0:
+        return '-'
+    else:
+        return '+'
 
 def hamilton_product(q1, q2):
-  return  [ q1[0]*q2[0] - q1[1]*q2[1] - q1[2]*q2[2] - q1[3]*q2[3],
+    """
+    retourne le produit hamiltonien de deux quaternions
+    """
+    return [q1[0]*q2[0] - q1[1]*q2[1] - q1[2]*q2[2] - q1[3]*q2[3],
             q1[0]*q2[1] + q1[1]*q2[0] + q1[2]*q2[3] - q1[3]*q2[2],
             q1[0]*q2[2] - q1[1]*q2[3] + q1[2]*q2[0] + q1[3]*q2[1],
             q1[0]*q2[3] + q1[1]*q2[2] - q1[2]*q2[1] + q1[3]*q2[0]]
 
 class Quaternion(object):
-  def __init__(self, x=0, y=0, z=0, w=0):
-    self.coords = [x, y, z]
-    self.w = w
+    """
+    classe définissant un quaternion
 
-  def set_angle(self, angle, axe=[0, 0, 1]):
-    self.coords = [ math.sin(angle/2)*axe[0],
-                    math.sin(angle/2)*axe[1],
-                    math.sin(angle/2)*axe[2]]
-    self.w = math.cos(angle/2)
+    q = w + x i + y j + z k
 
-  def rotate(self, pos):
-    x, y, z = self.coords
-    w = self.w
-    if isinstance(pos, np.ndarray):
-      qpos = np.concatenate((np.zeros(((1,) + pos.shape[1:])), pos))
-      return hamilton_product([w, x, y, z], hamilton_product(qpos, [w, -x, -y, -z]))[1:]
-    else:
-      return hamilton_product([w, x, y, z], hamilton_product([0] + pos, [w, -x, -y, -z]))[1:]
+    Paramètres
+    ==========
 
-  @property
-  def x(self):
-    return self.coords[0]
+    - x : double
+    - y : double
+    - z : double
+    - w : double
 
-  @x.setter
-  def x(self, value):
-    self.coords[0] = value
+    """
+    def __init__(self, x=0, y=0, z=0, w=0):
+        self.coords = [x, y, z]
+        self.w = w
 
-  @property
-  def y(self):
-    return self.coords[1]
+    def set_angle(self, angle, axe=[0, 0, 1]):
+        """
+        modifie le quaternion en fonction de l'angle et de l'axe
+        """
+        self.coords = [math.sin(angle/2)*axe[0],
+                       math.sin(angle/2)*axe[1],
+                       math.sin(angle/2)*axe[2]]
+        self.w = math.cos(angle/2)
 
-  @y.setter
-  def y(self, value):
-    self.coords[1] = value
+    def rotate(self, pos):
+        """
+        retourne la position tournée par le quaternion
+        """
+        x, y, z = self.coords
+        w = self.w
+        if isinstance(pos, np.ndarray):
+            qpos = np.concatenate((np.zeros(((1,) + pos.shape[1:])), pos))
+            return hamilton_product([w, x, y, z], hamilton_product(qpos, [w, -x, -y, -z]))[1:]
+        else:
+            return hamilton_product([w, x, y, z], hamilton_product([0] + pos, [w, -x, -y, -z]))[1:]
 
-  @property
-  def z(self):
-    return self.coords[2]
+    @property
+    def x(self):
+        return self.coords[0]
 
-  @z.setter
-  def z(self, value):
-    self.coords[2] = value
+    @x.setter
+    def x(self, value):
+        self.coords[0] = value
 
-  def __add__(self, q):
-    return Quaternion(self.x + q.x, self.y + q.y, self.z + q.z, self.w + q.w)
+    @property
+    def y(self):
+        return self.coords[1]
 
-  def __sub__(self, q):
-    return Quaternion(self.x - q.x, self.y - q.y, self.z - q.z, self.w - q.w)
+    @y.setter
+    def y(self, value):
+        self.coords[1] = value
 
-  def __mul__(self, q):
-    return Quaternion( self.w*q.x + self.x*q.w + self.y*q.z - self.z*q.y,
-                       self.w*q.y - self.x*q.z + self.y*q.w + self.z*q.x,
-                       self.w*q.z + self.x*q.y - self.y*q.x + self.z*q.w,
-                       self.w*q.w - self.x*q.x - self.y*q.y - self.z*q.z)
-  
-  def conjugate(self):
-    return Quaternion(-self.x, -self.y, -self.z, self.w)
+    @property
+    def z(self):
+        return self.coords[2]
 
-  def normalize(self):
-    norm = abs(self)
-    if norm == 0.:
-      norm = 1.
-    self.w /= norm
-    self.x /= norm
-    self.y /= norm
-    self.z /= norm
+    @z.setter
+    def z(self, value):
+        self.coords[2] = value
 
-  def __abs__(self):
-    return math.sqrt(self.w*self.w + self.x*self.x + self.y*self.y + self.z*self.z);
-  
-  def __str__(self):
-    s = '{} {} '.format(sign(self.w), self.w)
-  
-    for c, i in zip(self.coords, ['i', 'j', 'k']):
-      s += '{} {}{} '.format(sign(c), abs(c), i)
+    def __add__(self, q):
+        return Quaternion(self.x + q.x,
+                          self.y + q.y,
+                          self.z + q.z,
+                          self.w + q.w)
 
-    return s
+    def __sub__(self, q):
+        return Quaternion(self.x - q.x,
+                          self.y - q.y,
+                          self.z - q.z,
+                          self.w - q.w)
 
-  def __repr__(self):
-    return __str__(self)
+    def __mul__(self, q):
+        return Quaternion(self.w*q.x + self.x*q.w + self.y*q.z - self.z*q.y,
+                          self.w*q.y - self.x*q.z + self.y*q.w + self.z*q.x,
+                          self.w*q.z + self.x*q.y - self.y*q.x + self.z*q.w,
+                          self.w*q.w - self.x*q.x - self.y*q.y - self.z*q.z)
+    
+    def conjugate(self):
+        """
+        retourne le conjugué du quaternion
+        """
+        return Quaternion(-self.x, -self.y, -self.z, self.w)
+
+    def normalize(self):
+        """
+        normalise le quaternion
+        """
+        norm = abs(self)
+        if norm == 0.:
+            norm = 1.
+        self.w /= norm
+        self.x /= norm
+        self.y /= norm
+        self.z /= norm
+
+    def __abs__(self):
+        return math.sqrt(self.w*self.w +
+                         self.x*self.x +
+                         self.y*self.y +
+                         self.z*self.z);
+    
+    def __str__(self):
+        s = '{} {} '.format(sign(self.w), self.w)
+    
+        for c, i in zip(self.coords, ['i', 'j', 'k']):
+            s += '{} {}{} '.format(sign(c), abs(c), i)
+
+        return s
+
+    def __repr__(self):
+        return self.__str__()
 
 if __name__ == '__main__':
-  q = Quaternion()
-  print(q)
+    q = Quaternion()
+    print(q)
 
-  q.set_angle(math.pi/4)
-  q.normalize()
-  print(q)
+    q.set_angle(math.pi/4)
+    q.normalize()
+    print(q)
 
-  print((q*q).rotate([1, 0, 0]))
+    print((q*q).rotate([1, 0, 0]))
