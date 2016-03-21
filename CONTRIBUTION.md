@@ -1,4 +1,4 @@
-# Guide de contibution à Synopé
+# Guide de contribution à Synopé
 
 EN TRAVAUX
 
