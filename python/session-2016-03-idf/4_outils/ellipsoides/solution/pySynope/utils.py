@@ -9,16 +9,16 @@ Fonctions utilisées dans la création des
 
 import math
 
-def spe_cos(theta, epow):
+def spe_cos(theta, m):
     """
-    calcule sign(cos(theta))|cos(theta)|^epow
+    calcule sign(cos(theta))|cos(theta)|^m
     """
     cosw = math.cos(theta)
-    return math.copysign(abs(cosw)**epow, cosw)
+    return math.copysign(abs(cosw)**m, cosw)
 
-def spe_sin(theta, epow):
+def spe_sin(theta, m):
     """
-    calcule sign(sin(theta))|sin(theta)|^epow
+    calcule sign(sin(theta))|sin(theta)|^m
     """
     sinw = math.sin(theta)
-    return math.copysign(abs(sinw)**epow, sinw)
+    return math.copysign(abs(sinw)**m, sinw)
