@@ -8,6 +8,12 @@ def sign(a):
   else:
     return '+'
 
+def hamilton_product(q1, q2):
+  return  [ q1[0]*q2[0] - q1[1]*q2[1] - q1[2]*q2[2] - q1[3]*q2[3],
+            q1[0]*q2[1] + q1[1]*q2[0] + q1[2]*q2[3] - q1[3]*q2[2],
+            q1[0]*q2[2] - q1[1]*q2[3] + q1[2]*q2[0] + q1[3]*q2[1],
+            q1[0]*q2[3] + q1[1]*q2[2] - q1[2]*q2[1] + q1[3]*q2[0]]
+
 class Quaternion(object):
   def __init__(self, x=0, y=0, z=0, w=0):
     self.coords = [x, y, z]
@@ -22,9 +28,7 @@ class Quaternion(object):
   def rotate(self, pos):
     x, y, z = self.coords
     w = self.w
-    return [(1-2*y*y-2*z*z)*pos[0] +   (2*x*y-2*z*w)*pos[1] +   (2*x*z+2*y*w)*pos[2],
-              (2*x*y+2*z*w)*pos[0] + (1-2*x*x-2*z*z)*pos[1] +   (2*y*z-2*x*w)*pos[2],
-              (2*x*z-2*y*w)*pos[0] +   (2*y*z+2*x*w)*pos[1] + (1-2*x*x-2*y*y)*pos[2]]
+    return hamilton_product([w, x, y, z], hamilton_product([0] + pos, [w, -x, -y, -z]))[1:]
 
   @property
   def x(self):

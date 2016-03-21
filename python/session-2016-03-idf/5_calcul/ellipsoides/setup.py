@@ -1,8 +1,8 @@
 from setuptools import setup
 
-setup(name = 'ma_biblio',
+setup(name = 'pySynope',
       version = '1.0',
-      author = 'toto',
+      author = 'pySynope Team',
       description = 'module de superellipsoides et quaternions',
-      packages = ['ma_biblio', 'ma_biblio.ellipsoides'],
+      packages = ['pySynope', 'pySynope.ellipsoides'],
   )

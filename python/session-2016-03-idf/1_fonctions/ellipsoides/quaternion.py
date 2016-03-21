@@ -2,6 +2,12 @@
 from __future__ import print_function
 import math
 
+def hamilton_product(q1, q2):
+  return  [ q1[0]*q2[0] - q1[1]*q2[1] - q1[2]*q2[2] - q1[3]*q2[3],
+            q1[0]*q2[1] + q1[1]*q2[0] + q1[2]*q2[3] - q1[3]*q2[2],
+            q1[0]*q2[2] - q1[1]*q2[3] + q1[2]*q2[0] + q1[3]*q2[1],
+            q1[0]*q2[3] + q1[1]*q2[2] - q1[2]*q2[1] + q1[3]*q2[0]]
+  
 # """
 # rotation 3D d'une position à l'aide d'une représentation quaternion.
 #
@@ -35,9 +41,8 @@ def rotate_using_quaternion(angle, axe, pos):
   y = math.sin(angle/2)*axe[1]
   z = math.sin(angle/2)*axe[2]
   w = math.cos(angle/2)
-  return [(1-2*y*y-2*z*z)*pos[0] +   (2*x*y-2*z*w)*pos[1] +   (2*x*z+2*y*w)*pos[2],
-            (2*x*y+2*z*w)*pos[0] + (1-2*x*x-2*z*z)*pos[1] +   (2*y*z-2*x*w)*pos[2],
-            (2*x*z-2*y*w)*pos[0] +   (2*y*z+2*x*w)*pos[1] + (1-2*x*x-2*y*y)*pos[2]]
+
+  return hamilton_product([w, x, y, z], hamilton_product([0] + pos, [w, -x, -y, -z]))[1:]
 
 
 # """
@@ -72,3 +77,4 @@ def rotate_using_complex(angle, pos):
 
 print(rotate_using_complex(math.pi/4, [1, 0]))  
 print(rotate_using_quaternion(math.pi/4, [0, 0, 1], [1, 0, 0]))
+print(rotate_using_quaternion_1(math.pi/4, [0, 0, 1], [1, 0, 0]))

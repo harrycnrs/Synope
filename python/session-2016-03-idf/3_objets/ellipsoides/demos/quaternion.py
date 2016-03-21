@@ -1,8 +1,8 @@
 from __future__ import print_function
-import maBiblio
+import pySynope
 import math
 
-q = maBiblio.Quaternion()
+q = pySynope.Quaternion()
 print(q)
 
 q.set_angle(math.pi/4)

@@ -1,5 +1,5 @@
 from __future__ import print_function
-import ma_biblio
+import pySynope
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
 import matplotlib.animation as animation
@@ -27,10 +27,10 @@ def animate(i):
 
 rx, ry, rz = 1, 1, 1
 m1, m2 = 1, 1
-c = ma_biblio.Superellipsoid(15, rx, ry, rz, m1, m2)
+c = pySynope.Superellipsoid(15, rx, ry, rz, m1, m2)
 x, y, z = c.surface_with_square()
 
-q = ma_biblio.Quaternion()
+q = pySynope.Quaternion()
 q.set_angle(np.pi/10)
 
 rmax = np.max([rx, ry, rz])

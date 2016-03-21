@@ -2,7 +2,7 @@
 import math
 
 from ..linspace import linspace
-from ..utils import c, s
+from ..utils import spe_cos, spe_sin
 
 def beta_func(r, t):
   return math.gamma(r)*math.gamma(t)/math.gamma(r+t)
@@ -62,19 +62,19 @@ class Superellipsoid(object):
 
   def surface(self):
     phi_list = linspace(-.5*math.pi, .5*math.pi, self.n)
-    beta_list = linspace(-math.pi, math.pi, self.n)
+    theta_list = linspace(-math.pi, math.pi, self.n)
 
     x = []
     y = []
     z = []
-    for beta in beta_list:
+    for theta in theta_list:
       x.append([])
       y.append([])
       z.append([])
       for phi in phi_list:
-        x[-1].append(self.rx*c(phi, 2./self.m1)*c(beta, 2./self.m2))
-        y[-1].append(self.ry*c(phi, 2./self.m1)*s(beta, 2./self.m2))
-        z[-1].append(self.rz*s(phi, 2./self.m1))
+        x[-1].append(self.rx*spe_cos(phi, 2./self.m1)*spe_cos(theta, 2./self.m2))
+        y[-1].append(self.ry*spe_cos(phi, 2./self.m1)*spe_sin(theta, 2./self.m2))
+        z[-1].append(self.rz*spe_sin(phi, 2./self.m1))
     return x, y, z
 
   @property

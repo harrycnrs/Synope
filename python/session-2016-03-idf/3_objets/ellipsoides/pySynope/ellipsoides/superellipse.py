@@ -2,7 +2,7 @@
 import math
 
 from ..linspace import linspace
-from ..utils import c, s
+from ..utils import spe_cos, spe_sin
 
 class Superellipse(object):
   """
@@ -57,8 +57,8 @@ class Superellipse(object):
     x = []
     y = []
     for phi in phi_list:
-      x.append(self.rx*c(phi, 2./self.m))
-      y.append(self.ry*s(phi, 2./self.m))
+      x.append(self.rx*spe_cos(phi, 2./self.m))
+      y.append(self.ry*spe_sin(phi, 2./self.m))
     return x, y
 
   @property

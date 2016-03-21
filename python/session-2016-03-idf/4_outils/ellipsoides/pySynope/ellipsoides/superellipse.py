@@ -1,7 +1,8 @@
 # coding: utf8
-import numpy as np
+import math
 
-from ..utils import c, s
+from ..linspace import linspace
+from ..utils import spe_cos, spe_sin
 
 class Superellipse(object):
   """
@@ -52,19 +53,18 @@ class Superellipse(object):
     self.m = m
 
   def surface(self):
-    phi = np.linspace(0., 2.*np.pi, self.n)
-    return self.rx*c(phi, 2./self.m), self.ry*s(phi, 2./self.m)
-
-  def surface_with_square(self):
-    n = self.n
-    x = np.concatenate((np.linspace(-1, 1., n), np.ones(n-2), np.linspace(1, -1., n), -np.ones(n-2)))
-    y = np.concatenate((-np.ones(n-1), np.linspace(-1, 1., n), np.ones(n-2), np.linspace(1, -1., n-1, endpoint=False)))
-    return x*self.rx*(1. - .5*np.abs(y)**self.m)**(1./self.m),  y*self.ry*(1. - .5*np.abs(x)**self.m)**(1./self.m)
+    phi_list = linspace(0., 2.*math.pi, self.n)
+    x = []
+    y = []
+    for phi in phi_list:
+      x.append(self.rx*spe_cos(phi, 2./self.m))
+      y.append(self.ry*spe_sin(phi, 2./self.m))
+    return x, y
 
   @property
   def area(self):
     r = 1./self.m
-    return 4**(1-r)*self.rx*self.ry*math.sqrt(np.pi)*math.gamma(1+r)/math.gamma(.5+r)
+    return 4**(1-r)*self.rx*self.ry*math.sqrt(math.pi)*math.gamma(1+r)/math.gamma(.5+r)
 
 class Circle(Superellipse):
   def __init__(self, n, r):
@@ -72,4 +72,4 @@ class Circle(Superellipse):
 
   @property
   def perimeter(self):
-    return 2*np.pi*self.rx
+    return 2*math.pi*self.rx
