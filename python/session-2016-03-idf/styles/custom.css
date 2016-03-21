@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5 {
 div.text_cell_render{
     font-family: 'Alegreya Sans',Computer Modern, "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
     line-height: 135%;
-    font-size: 120%;
+    font-size: 140%;
     width:100%;/*600px;*/
     /*margin-left:auto;*/
     /*margin-right:auto;*/
@@ -54,7 +54,7 @@ div.text_cell_render{
     border-radius: 25px;
     font-style: italic;
     height:5%;
-    width:15%;
+    width:20%;
     padding:5px;
     text-align: center;
 }
@@ -83,7 +83,19 @@ div.input_area {
     border-radius: 10px;
 }
 
-/*.reveal h1 {
+.reveal h1 {
+    font-size: 70px;
     text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
-}*/
+}
+
+.reveal h2 {
+    font-size: 50px;
+    text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+.reveal h3 {
+    font-size: 50px;
+    
+}
+
 </style>
