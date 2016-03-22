@@ -7,7 +7,7 @@ def hamilton_product(q1, q2):
             q1[0]*q2[1] + q1[1]*q2[0] + q1[2]*q2[3] - q1[3]*q2[2],
             q1[0]*q2[2] - q1[1]*q2[3] + q1[2]*q2[0] + q1[3]*q2[1],
             q1[0]*q2[3] + q1[1]*q2[2] - q1[2]*q2[1] + q1[3]*q2[0]]
-  
+
 # """
 # rotation 3D d'une position à l'aide d'une représentation quaternion.
 #
@@ -15,7 +15,7 @@ def hamilton_product(q1, q2):
 # ==========
 #
 # angle : radians
-# 
+#
 # axe : liste de taille 3
 #       axe de rotation
 #
@@ -68,13 +68,12 @@ def rotate_using_complex(angle, pos):
     return
   x = math.cos(angle)
   y = math.sin(angle)
-  return [x*pos[0] - y*pos[1], x*pos[1] + y*pos[0]] 
+  return [x*pos[0] - y*pos[1], x*pos[1] + y*pos[0]]
 
 
 # """
 # demonstration code
 # """
 
-print(rotate_using_complex(math.pi/4, [1, 0]))  
+print(rotate_using_complex(math.pi/4, [1, 0]))
 print(rotate_using_quaternion(math.pi/4, [0, 0, 1], [1, 0, 0]))
-print(rotate_using_quaternion_1(math.pi/4, [0, 0, 1], [1, 0, 0]))
