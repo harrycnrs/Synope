@@ -1,6 +1,8 @@
 # coding: utf8
 from __future__ import print_function
 from six.moves import range
+# coding: utf-8
+
 import math
 
 # """
@@ -26,11 +28,11 @@ def linspace(begin, end, n):
   h = (end - begin)/(n-1)
   return [begin + i*h for i in range(n)]
 
-def c(w, m):
+def spe_cos(w, m):
   cosw = math.cos(w)
   return math.copysign(abs(cosw)**m, cosw)
 
-def s(w, m):
+def spe_sin(w, m):
   sinw = math.sin(w)
   return math.copysign(abs(sinw)**m, sinw)
 
@@ -67,8 +69,8 @@ def superellipse(n, rx, ry, m):
   x = []
   y = []
   for phi in phi_list:
-    x.append(rx*c(phi, 2./m))
-    y.append(ry*s(phi, 2./m))
+    x.append(rx*spe_cos(phi, 2./m))
+    y.append(ry*spe_sin(phi, 2./m))
   return x, y
 
 # """
@@ -113,9 +115,9 @@ def superellipsoid(n, rx, ry, rz, m1, m2):
     y.append([])
     z.append([])
     for phi in phi_list:
-      x[-1].append(rx*c(phi, 2./m1)*c(beta, 2./m2))
-      y[-1].append(ry*c(phi, 2./m1)*s(beta, 2./m2))
-      z[-1].append(rz*s(phi, 2./m1))
+      x[-1].append(rx*spe_cos(phi, 2./m1)*spe_cos(beta, 2./m2))
+      y[-1].append(ry*spe_cos(phi, 2./m1)*spe_sin(beta, 2./m2))
+      z[-1].append(rz*spe_sin(phi, 2./m1))
   return x, y, z
 
 
@@ -123,7 +125,12 @@ def superellipsoid(n, rx, ry, rz, m1, m2):
 # demonstration code
 # """
 
-x, y = superellipse(10, 1, 1, 2)
+print("superellipse(10, 1, 1, 2)")
+x, y = superellipse(5, 1, 1, 2)
+print(x)
+print(y)
+
+print("superellipsoid(10, 1, 1, 1, 2, 2)")
 x, y, z = superellipsoid(10, 1, 1, 1, 2, 2)
 print(x)
 print(y)
