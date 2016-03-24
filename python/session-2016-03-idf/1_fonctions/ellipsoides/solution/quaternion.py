@@ -85,11 +85,42 @@ def rotate_using_quaternion(angle, axe, pos):
   return hamilton_product([w, x, y, z], hamilton_product([0] + pos, [w, -x, -y, -z]))[1:]
 
 
+<<<<<<< HEAD
+# """
+# rotation 2D d'une position à l'aide d'une représentation complexe.
+#
+# Paramètres
+# ==========
+#
+# angle: radians
+#
+# pos : liste de taille 2
+#       point à faire tourner
+#
+# Sortie
+# ======
+#
+# la position tournée
+#
+# """
+def rotate_using_complex(angle, pos):
+  if len(pos) != 2:
+    print("La taille de pos doit être de 2\n")
+    return
+  x = math.cos(angle)
+  y = math.sin(angle)
+  return [x*pos[0] - y*pos[1], x*pos[1] + y*pos[0]]
+
+=======
+>>>>>>> e3702a09e092537adf954b18a181cf65a2ce4485
 
 # """
 # demonstration code
 # """
 
-print(rotate_using_complex(math.pi/4, [1, 0]))  
+print(rotate_using_complex(math.pi/4, [1, 0]))
 print(rotate_using_quaternion(math.pi/4, [0, 0, 1], [1, 0, 0]))
+<<<<<<< HEAD
+=======
 print(rotate_using_quaternion(math.pi/4, [0, 0, 1], [1, 0, 0]))
+>>>>>>> e3702a09e092537adf954b18a181cf65a2ce4485
