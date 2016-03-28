@@ -1,5 +1,15 @@
-from __future__ import print_function
-import pySynope
+# -*- coding: utf-8 -*-
 
-print(pySynope.superellipse(10, 1, 1, 2))
-print(pySynope.superellipsoid(10, 1, 1, 1, 2, 2))
+import pySynope
+import utils
+
+x, y = pySynope.superellipse(5, 1, 1, 2)
+print("superellipse(5, 1, 1, 2)")
+print(utils.myformat(x))
+print(utils.myformat(y))
+
+x, y, z = pySynope.superellipsoid(4, 1, 1, 1, 2, 2)
+print("superellipsoid(4, 1, 1, 1, 2, 2)")
+print(utils.myformat2d(x))
+print(utils.myformat2d(y))
+print(utils.myformat2d(z))

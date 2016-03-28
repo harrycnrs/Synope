@@ -1,6 +1,8 @@
 # coding: utf8
+
 from __future__ import print_function
 import math
+
 
 # """
 # rotation 2D d'une position à l'aide d'une représentation complexe.
@@ -27,6 +29,7 @@ def rotate_using_complex(angle, pos):
   y = math.sin(angle)
   return [x*pos[0] - y*pos[1], x*pos[1] + y*pos[0]]
 
+
 # """
 # produit hamiltonien de deux quaternions
 #
@@ -47,6 +50,7 @@ def hamilton_product(q1, q2):
             q1[0]*q2[1] + q1[1]*q2[0] + q1[2]*q2[3] - q1[3]*q2[2],
             q1[0]*q2[2] - q1[1]*q2[3] + q1[2]*q2[0] + q1[3]*q2[1],
             q1[0]*q2[3] + q1[1]*q2[2] - q1[2]*q2[1] + q1[3]*q2[0]]
+
 
 # """
 # rotation 3D d'une position à l'aide d'une représentation quaternion.
@@ -77,50 +81,30 @@ def rotate_using_quaternion(angle, axe, pos):
     print("La taille de pos doit être de 3\n")
     return
 
+  w = math.cos(angle/2)
   x = math.sin(angle/2)*axe[0]
   y = math.sin(angle/2)*axe[1]
   z = math.sin(angle/2)*axe[2]
-  w = math.cos(angle/2)
 
   return hamilton_product([w, x, y, z], hamilton_product([0] + pos, [w, -x, -y, -z]))[1:]
 
 
-<<<<<<< HEAD
-# """
-# rotation 2D d'une position à l'aide d'une représentation complexe.
-#
-# Paramètres
-# ==========
-#
-# angle: radians
-#
-# pos : liste de taille 2
-#       point à faire tourner
-#
-# Sortie
-# ======
-#
-# la position tournée
-#
-# """
-def rotate_using_complex(angle, pos):
-  if len(pos) != 2:
-    print("La taille de pos doit être de 2\n")
-    return
-  x = math.cos(angle)
-  y = math.sin(angle)
-  return [x*pos[0] - y*pos[1], x*pos[1] + y*pos[0]]
 
-=======
->>>>>>> e3702a09e092537adf954b18a181cf65a2ce4485
+# """
+# utility
+# """
+
+def myformat(values):
+    fe = ['{:+.1f}']*len(values)
+    fg = '('+', '.join(fe)+')'
+    return fg.format(*values)
+
+
 
 # """
 # demonstration code
 # """
 
-print(rotate_using_complex(math.pi/4, [1, 0]))
-print(rotate_using_quaternion(math.pi/4, [0, 0, 1], [1, 0, 0]))
-<<<<<<< HEAD
-=======
-print(rotate_using_quaternion(math.pi/4, [0, 0, 1], [1, 0, 0]))
->>>>>>> e3702a09e092537adf954b18a181cf65a2ce4485
+print(myformat(rotate_using_complex(math.pi/4, rotate_using_complex(math.pi/4, [1, 0]))))  
+print(myformat(rotate_using_quaternion(math.pi/4, [0, 0, 1], rotate_using_quaternion(math.pi/4, [0, 0, 1], [1, 0, 0]))))
+

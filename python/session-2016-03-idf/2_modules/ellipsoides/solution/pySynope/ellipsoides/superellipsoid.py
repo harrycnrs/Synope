@@ -2,7 +2,7 @@
 import math
 
 from ..linspace import linspace
-from ..utils import c, s
+from ..utils import spe_cos, spe_sin
 
 # """
 # Renvoie les coordonnées de la superellipsoid.
@@ -34,6 +34,7 @@ from ..utils import c, s
 # les coordonnées de la superellipse.
 #
 # """
+
 def superellipsoid(n, rx, ry, rz, m1, m2):
   phi_list = linspace(-.5*math.pi, .5*math.pi, n)
   beta_list = linspace(-math.pi, math.pi, n)
@@ -46,8 +47,15 @@ def superellipsoid(n, rx, ry, rz, m1, m2):
     y.append([])
     z.append([])
     for phi in phi_list:
-      x[-1].append(rx*c(phi, 2./m1)*c(beta, 2./m2))
-      y[-1].append(ry*c(phi, 2./m1)*s(beta, 2./m2))
-      z[-1].append(rz*s(phi, 2./m1))
+      x[-1].append(rx*spe_cos(phi, 2./m1)*spe_cos(beta, 2./m2))
+      y[-1].append(ry*spe_cos(phi, 2./m1)*spe_sin(beta, 2./m2))
+      z[-1].append(rz*spe_sin(phi, 2./m1))
   return x, y, z
 
+def beta_func(r, t):
+  return math.gamma(r)*math.gamma(t)/math.gamma(r+t)
+
+def superellipsoid_volume(rx, ry, rz, m1, m2):
+  r = 1./m1
+  t = 1./m2
+  return 8./3.*rx*ry*rz*r*t*beta_func(r, r)*beta_func(2*t, t)

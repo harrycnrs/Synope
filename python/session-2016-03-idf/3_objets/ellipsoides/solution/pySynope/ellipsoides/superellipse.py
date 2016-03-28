@@ -1,12 +1,13 @@
 # coding: utf8
+
 import math
 
 from ..linspace import linspace
 from ..utils import spe_cos, spe_sin
 
-class Superellipse(object):
+class Superellipse:
   """
-  définit une superellipse.
+  Définit une superellipse.
 
   x = rx c(theta, 2/m)
   y = ry s(theta, 2/m)
@@ -16,20 +17,8 @@ class Superellipse(object):
   c(theta, m) = sign(cos(theta))|cos(theta)|**m
   s(theta, m) = sign(sin(theta))|sin(theta)|**m
   
-  Paramètres
-  ==========
-
-  n : nombre de points de discrétisation en theta
-
-  rx : rayon suivant x
-
-  ry : rayon suivant y
-
-  m : puissance dans l'expression de la superellipse.
-
   Attributs
   =========
-  n : nombre de points de discrétisation en theta
 
   rx : rayon suivant x
 
@@ -46,14 +35,14 @@ class Superellipse(object):
   
   """
 
-  def __init__(self, n, rx, ry, m):
-    self.n = n
+  def __init__(self, rx, ry, m):
     self.rx = rx
     self.ry = ry
     self.m = m
 
-  def surface(self):
-    phi_list = linspace(0., 2.*math.pi, self.n)
+  # n : nombre de points de discrétisation en theta
+  def cloud(self, n):
+    phi_list = linspace(0., 2.*math.pi, n)
     x = []
     y = []
     for phi in phi_list:
@@ -67,9 +56,12 @@ class Superellipse(object):
     return 4**(1-r)*self.rx*self.ry*math.sqrt(math.pi)*math.gamma(1+r)/math.gamma(.5+r)
 
 class Circle(Superellipse):
-  def __init__(self, n, r):
-    super(Circle, self).__init__(n, r, r, 2)
+  def __init__(self, r):
+    super().__init__(r, r, 2)
 
   @property
   def perimeter(self):
     return 2*math.pi*self.rx
+    
+    
+
