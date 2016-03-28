@@ -1,10 +1,10 @@
 import math
 
-def c(w, m):
+def spe_cos(w, m):
     cosw = math.cos(w)
     return math.copysign(abs(cosw)**m, cosw)
 
-def s(w, m):
+def spe_sin(w, m):
     sinw = math.sin(w)
     return math.copysign(abs(sinw)**m, sinw)
     
