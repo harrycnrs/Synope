@@ -2,7 +2,7 @@
 import math
 
 from ..linspace import linspace
-from ..utils import c, s
+from ..utils import spe_cos, spe_sin
 
 # """
 # Renvoie les coordonnées de la superellipse.
@@ -37,6 +37,10 @@ def superellipse(n, rx, ry, m):
   x = []
   y = []
   for phi in phi_list:
-    x.append(rx*c(phi, 2./m))
-    y.append(ry*s(phi, 2./m))
+    x.append(rx*spe_cos(phi, 2./m))
+    y.append(ry*spe_sin(phi, 2./m))
   return x, y
+  
+def superellipse_area(rx, ry, m):
+  r = 1./m
+  return 4**(1-r)*rx*ry*math.sqrt(math.pi)*math.gamma(1+r)/math.gamma(.5+r)

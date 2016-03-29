@@ -8,3 +8,4 @@ def spe_sin(w, m):
     sinw = math.sin(w)
     return math.copysign(abs(sinw)**m, sinw)
     
+

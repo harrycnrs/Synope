@@ -1,12 +1,13 @@
-from __future__ import print_function
-import pySynope
+# -*- coding: utf-8 -*-
+
+from pySynope import Point3d, Quaternion
+import utils
 import math
 
-q = pySynope.Quaternion()
+q = Quaternion(math.pi/4)
 print(q)
 
-q.set_angle(math.pi/4)
-q.normalize()
-print(q)
-
-print((q*q).rotate([1, 0, 0]))
+pos = Quaternion(Point3d(1, 0, 0))
+q2 = q*q
+pos = (q2*pos*q2.conjugate()).point()
+print(pos)  
