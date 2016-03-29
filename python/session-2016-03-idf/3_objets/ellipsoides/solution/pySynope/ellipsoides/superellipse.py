@@ -42,12 +42,11 @@ class Superellipse:
 
   # n : nombre de points de discrétisation en theta
   def cloud(self, n):
-    phi_list = linspace(0., 2.*math.pi, n)
     x = []
     y = []
-    for phi in phi_list:
-      x.append(self.rx*spe_cos(phi, 2./self.m))
-      y.append(self.ry*spe_sin(phi, 2./self.m))
+    for theta in linspace(0., 2.*math.pi, n):
+      x.append(self.rx*spe_cos(theta, 2./self.m))
+      y.append(self.ry*spe_sin(theta, 2./self.m))
     return x, y
 
   @property

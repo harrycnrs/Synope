@@ -33,12 +33,11 @@ from ..utils import spe_cos, spe_sin
 #
 # """
 def superellipse(n, rx, ry, m):
-  phi_list = linspace(0., 2.*math.pi, n)
   x = []
   y = []
-  for phi in phi_list:
-    x.append(rx*spe_cos(phi, 2./m))
-    y.append(ry*spe_sin(phi, 2./m))
+  for theta in linspace(0., 2.*math.pi, n):
+    x.append(rx*spe_cos(theta, 2./m))
+    y.append(ry*spe_sin(theta, 2./m))
   return x, y
   
 def superellipse_area(rx, ry, m):
