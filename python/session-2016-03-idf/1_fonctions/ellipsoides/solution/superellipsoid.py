@@ -68,12 +68,11 @@ def spe_sin(w, m):
 # """
 
 def superellipse(n, rx, ry, m):
-  phi_list = linspace(0., 2.*math.pi, n)
   x = []
   y = []
-  for phi in phi_list:
-    x.append(rx*spe_cos(phi, 2./m))
-    y.append(ry*spe_sin(phi, 2./m))
+  for theta in linspace(0., 2.*math.pi, n):
+    x.append(rx*spe_cos(theta, 2./m))
+    y.append(ry*spe_sin(theta, 2./m))
   return x, y
 
 
@@ -109,19 +108,16 @@ def superellipse(n, rx, ry, m):
 # """
 
 def superellipsoid(n, rx, ry, rz, m1, m2):
-  phi_list = linspace(-.5*math.pi, .5*math.pi, n)
-  beta_list = linspace(-math.pi, math.pi, n)
-
   x = []
   y = []
   z = []
-  for beta in beta_list:
+  for theta in linspace(-math.pi, math.pi, n):
     x.append([])
     y.append([])
     z.append([])
-    for phi in phi_list:
-      x[-1].append(rx*spe_cos(phi, 2./m1)*spe_cos(beta, 2./m2))
-      y[-1].append(ry*spe_cos(phi, 2./m1)*spe_sin(beta, 2./m2))
+    for phi in linspace(-.5*math.pi, .5*math.pi, n):
+      x[-1].append(rx*spe_cos(phi, 2./m1)*spe_cos(theta, 2./m2))
+      y[-1].append(ry*spe_cos(phi, 2./m1)*spe_sin(theta, 2./m2))
       z[-1].append(rz*spe_sin(phi, 2./m1))
   return x, y, z
 
