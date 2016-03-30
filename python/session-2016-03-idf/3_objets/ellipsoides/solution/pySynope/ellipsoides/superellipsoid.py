@@ -46,17 +46,14 @@ class Superellipsoid:
 
   # n : nombre de points de discrétisation en theta et en phi
   def cloud(self, n):
-    phi_list = linspace(-.5*math.pi, .5*math.pi, n)
-    theta_list = linspace(-math.pi, math.pi, n)
-
     x = []
     y = []
     z = []
-    for theta in theta_list:
+    for theta in linspace(-math.pi, math.pi, n):
       x.append([])
       y.append([])
       z.append([])
-      for phi in phi_list:
+      for phi in linspace(-.5*math.pi, .5*math.pi, n):
         x[-1].append(self.rx*spe_cos(phi, 2./self.m1)*spe_cos(theta, 2./self.m2))
         y[-1].append(self.ry*spe_cos(phi, 2./self.m1)*spe_sin(theta, 2./self.m2))
         z[-1].append(self.rz*spe_sin(phi, 2./self.m1))
