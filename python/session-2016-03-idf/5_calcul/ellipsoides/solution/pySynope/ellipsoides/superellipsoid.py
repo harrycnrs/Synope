@@ -29,8 +29,6 @@ class Superellipsoid(object):
     Paramètres
     ==========
 
-    n : nombre de points de discrétisation en theta et en phi
-
     rx : rayon suivant x
 
     ry : rayon suivant y
@@ -59,17 +57,22 @@ class Superellipsoid(object):
 
     volume : renvoie le volume de la superellipsoide.
     """
-    def __init__(self, n, rx, ry, rz, m1, m2):
-        self.n = n
+    def __init__(self, rx, ry, rz, m1, m2):
         self.rx = rx
         self.ry = ry
         self.rz = rz
         self.m1 = m1
         self.m2 = m2
 
-    def surface(self):
+    def surface(self, n=10):
         """
         retourne les points à la surface de la superellipsoide.
+
+        Paramètre
+        =========
+
+        n : nombre de points de discrétisation en theta et en phi
+
         """
         phi = np.linspace(-.5*np.pi, .5*np.pi, self.n)[:, np.newaxis]
         theta = np.linspace(-np.pi, np.pi, self.n)[np.newaxis, :]
@@ -79,17 +82,20 @@ class Superellipsoid(object):
         z = self.rz*spe_sin(phi, 2./self.m1)*np.ones(theta.shape)
         return x, y, z
 
-    def surface_with_square(self):
+    def surface_with_square(self, n=10):
         """
         retourne les points à la surface de la superellipsoid
         en projetant un carré sur  deux superellipses et en 
         faisant leur produit sphérique.
-        """
-        s1 = Superellipse(self.n, 1, 1, self.m1)
-        s2 = Superellipse(self.n, 1, 1, self.m2)
 
-        gx, gy = s1.surface_with_square()
-        hx, hy = s2.surface_with_square()
+        n : nombre de points de discrétisation sur un coté du carré
+
+        """
+        s1 = Superellipse(1, 1, self.m1)
+        s2 = Superellipse(1, 1, self.m2)
+
+        gx, gy = s1.surface_with_square(n)
+        hx, hy = s2.surface_with_square(n)
 
         x = self.rx*gx[np.newaxis, :]*hx[:, np.newaxis]
         y = self.ry*gx[np.newaxis, :]*hy[:, np.newaxis]
@@ -110,8 +116,8 @@ class Sphere(Superellipsoid):
     """
     Définit une sphère à partir d'une superellipsoide.
     """
-    def __init__(self, n, r):
-        super(Sphere, self).__init__(n, r, r, r, 2, 2)
+    def __init__(self, r):
+        super(Sphere, self).__init__(r, r, r, 2, 2)
 
     @property
     def area(self):

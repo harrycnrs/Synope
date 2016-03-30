@@ -29,8 +29,6 @@ class Superellipsoid(object):
     Paramètres
     ==========
 
-    n : nombre de points de discrétisation en theta et en phi
-
     rx : rayon suivant x
 
     ry : rayon suivant y
@@ -59,20 +57,25 @@ class Superellipsoid(object):
 
     volume : renvoie le volume de la superellipsoide.
     """
-    def __init__(self, n, rx, ry, rz, m1, m2):
-        self.n = n
+    def __init__(self, rx, ry, rz, m1, m2):
         self.rx = rx
         self.ry = ry
         self.rz = rz
         self.m1 = m1
         self.m2 = m2
 
-    def surface(self):
+    def surface(self, n=10):
         """
         retourne les points à la surface de la superellipsoide.
+
+        Paramètre
+        =========
+
+        n : nombre de points de discrétisation en theta et en phi
+
         """
-        phi_list = linspace(-.5*math.pi, .5*math.pi, self.n)
-        theta_list = linspace(-math.pi, math.pi, self.n)
+        phi_list = linspace(-.5*math.pi, .5*math.pi, n)
+        theta_list = linspace(-math.pi, math.pi, n)
 
         x = []
         y = []
@@ -102,8 +105,8 @@ class Sphere(Superellipsoid):
     """
     Définit une sphère à partir d'une superellipsoide.
     """
-    def __init__(self, n, r):
-        super(Sphere, self).__init__(n, r, r, r, 2, 2)
+    def __init__(self, r):
+        super(Sphere, self).__init__(r, r, r, 2, 2)
 
     @property
     def area(self):

@@ -23,8 +23,6 @@ class Superellipse(object):
     Paramètres
     ==========
 
-    n : nombre de points de discrétisation en theta
-
     rx : rayon suivant x
 
     ry : rayon suivant y
@@ -50,20 +48,25 @@ class Superellipse(object):
 
     """
 
-    def __init__(self, n, rx, ry, m):
-        self.n = n
+    def __init__(self, rx, ry, m):
         self.rx = rx
         self.ry = ry
         self.m = m
 
-    def surface(self):
+    def surface(self, n=10):
         """
         retourne les points à la surface de la superellipse
+
+        Paramètre
+        =========
+
+        n : nombre de points de discrétisation en theta
+
         """
-        phi_list = linspace(0., 2.*math.pi, self.n)
+        theta_list = linspace(0., 2.*math.pi, n)
         x = []
         y = []
-        for phi in phi_list:
+        for theta in theta_list:
             x.append(self.rx*spe_cos(phi, 2./self.m))
             y.append(self.ry*spe_sin(phi, 2./self.m))
         return x, y
@@ -80,8 +83,8 @@ class Circle(Superellipse):
     """
     définit un cercle à partir d'une superellipse
     """
-    def __init__(self, n, r):
-        super(Circle, self).__init__(n, r, r, 2)
+    def __init__(self, r):
+        super(Circle, self).__init__(r, r, 2)
 
     @property
     def perimeter(self):

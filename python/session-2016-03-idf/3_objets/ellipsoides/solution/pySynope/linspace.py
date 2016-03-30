@@ -1,25 +1,28 @@
 # coding: utf8
+"""
+implémentation d'une fonction linspace
+"""
 from six.moves import range
 
-def linspace(begin, end, n):
-  """
-  Renvoie une liste de points espacés de manière régulière
-  pour un intervalle donné.
+def linspace(begin, end, npoints):
+    """
+    Renvoie une liste de points espacés de manière régulière
+    pour un intervalle donné.
 
-  Paramètres
-  ==========
+    Paramètres
+    ==========
 
-  begin : borne inférieure de l'intervalle
+    begin : borne inférieure de l'intervalle
 
-  end : borne supérieure de l'intervalle
+    end : borne supérieure de l'intervalle
 
-  n : nombre de points
+    npoints : nombre de points
 
-  Sortie
-  ======
+    Sortie
+    ======
 
-  Renvoie la liste des points de discrétisation.
+    Renvoie la liste des points de discrétisation.
 
-  """
-  h = (end - begin)/(n-1)
-  return [begin + i*h for i in range(n)]
+    """
+    step = (end - begin)/(npoints-1)
+    return [begin + i*step for i in range(npoints)]
