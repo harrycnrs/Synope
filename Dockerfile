@@ -1,5 +1,10 @@
 FROM andrewosh/binder-base
 
+USER root
+
+RUN /bin/bash -c 'wget https://github.com/jgm/pandoc/releases/download/1.17.0.2/pandoc-1.17.0.2-1-amd64.deb; dpkg -i pandoc-1.17.0.2-1-amd64.deb'
+RUN apt-get install -y texlive
+
 USER main
 
 ADD environment.yml /home/main/
