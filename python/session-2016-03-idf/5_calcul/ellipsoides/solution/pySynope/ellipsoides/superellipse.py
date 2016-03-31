@@ -31,8 +31,6 @@ class Superellipse(object):
 
     Attributs
     =========
-    n : nombre de points de discrétisation en theta
-
     rx : rayon suivant x
 
     ry : rayon suivant y
@@ -48,25 +46,35 @@ class Superellipse(object):
 
     """
 
-    def __init__(self, n, rx, ry, m):
-        self.n = n
+    def __init__(self, rx, ry, m):
         self.rx = rx
         self.ry = ry
         self.m = m
 
-    def surface(self):
+    def surface(self, n=10):
         """
         retourne les points à la surface de la superellipse
-        """
-        phi = np.linspace(0., 2.*np.pi, self.n)
-        return self.rx*spe_cos(phi, 2./self.m), self.ry*spe_sin(phi, 2./self.m)
 
-    def surface_with_square(self):
+        Paramètre
+        =========
+
+        n : nombre de points de discrétisation
+
+        """
+        theta = np.linspace(0., 2.*np.pi, n)
+        return self.rx*spe_cos(theta, 2./self.m), self.ry*spe_sin(theta, 2./self.m)
+
+    def surface_with_square(self, n=10):
         """
         retourne les points à la surface de la superellipse
         en projetant un carré sur celle-ci
+
+        Paramètre
+        =========
+
+        n : nombre de points de discrétisation sur un coté du carré
+
         """
-        n = self.n
         x = np.concatenate((np.linspace(-1, 1., n), np.ones(n-2), np.linspace(1, -1., n), -np.ones(n-2)))
         y = np.concatenate((-np.ones(n-1), np.linspace(-1, 1., n), np.ones(n-2), np.linspace(1, -1., n-1, endpoint=False)))
         return x*self.rx*(1. - .5*np.abs(y)**self.m)**(1./self.m),  y*self.ry*(1. - .5*np.abs(x)**self.m)**(1./self.m)
@@ -83,8 +91,8 @@ class Circle(Superellipse):
     """
     définit un cercle à partir d'une superellipse
     """
-    def __init__(self, n, r):
-        super(Circle, self).__init__(n, r, r, 2)
+    def __init__(self, r):
+        super(Circle, self).__init__(r, r, 2)
 
     @property
     def perimeter(self):

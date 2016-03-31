@@ -1,67 +1,94 @@
 # coding: utf8
+"""
+implémentation d'une superellipse
+"""
 
 import math
 
 from ..linspace import linspace
 from ..utils import spe_cos, spe_sin
 
-class Superellipse:
-  """
-  Définit une superellipse.
+class Superellipse(object):
+    """
+    définit une superellipse.
 
-  x = rx c(theta, 2/m)
-  y = ry s(theta, 2/m)
+    x = rx c(theta, 2/m)
+    y = ry s(theta, 2/m)
 
-  où 
+    où
 
-  c(theta, m) = sign(cos(theta))|cos(theta)|**m
-  s(theta, m) = sign(sin(theta))|sin(theta)|**m
-  
-  Attributs
-  =========
+    c(theta, m) = sign(cos(theta))|cos(theta)|**m
+    s(theta, m) = sign(sin(theta))|sin(theta)|**m
 
-  rx : rayon suivant x
+    Paramètres
+    ==========
 
-  ry : rayon suivant y
+    rx : rayon suivant x
 
-  m : puissance dans l'expression de la superellipse.
+    ry : rayon suivant y
 
-  Méthodes
-  ========
+    m : puissance dans l'expression de la superellipse.
 
-  surface: renvoie les points de la surface.
+    Attributs
+    =========
+    n : nombre de points de discrétisation en theta
 
-  area: renvoie l'aire.    
-  
-  """
+    rx : rayon suivant x
 
-  def __init__(self, rx, ry, m):
-    self.rx = rx
-    self.ry = ry
-    self.m = m
+    ry : rayon suivant y
 
-  # n : nombre de points de discrétisation en theta
-  def cloud(self, n):
-    phi_list = linspace(0., 2.*math.pi, n)
-    x = []
-    y = []
-    for phi in phi_list:
-      x.append(self.rx*spe_cos(phi, 2./self.m))
-      y.append(self.ry*spe_sin(phi, 2./self.m))
-    return x, y
+    m : puissance dans l'expression de la superellipse.
 
-  @property
-  def area(self):
-    r = 1./self.m
-    return 4**(1-r)*self.rx*self.ry*math.sqrt(math.pi)*math.gamma(1+r)/math.gamma(.5+r)
+    Méthodes
+    ========
+
+    surface: renvoie les points de la surface.
+
+    area: renvoie l'aire.
+
+    """
+
+    def __init__(self, rx, ry, m):
+        self.rx = rx
+        self.ry = ry
+        self.m = m
+
+    def surface(self, n=10):
+        """
+        retourne les points à la surface de la superellipse
+
+        Paramètre
+        =========
+
+        n : nombre de points de discrétisation en theta
+
+        """
+        theta_list = linspace(0., 2.*math.pi, n)
+        x = []
+        y = []
+        for theta in theta_list:
+            x.append(self.rx*spe_cos(phi, 2./self.m))
+            y.append(self.ry*spe_sin(phi, 2./self.m))
+        return x, y
+
+    @property
+    def area(self):
+        """
+        retourne l'aire de la superellipse
+        """
+        r = 1./self.m
+        return 4**(1-r)*self.rx*self.ry*math.sqrt(math.pi)*math.gamma(1+r)/math.gamma(.5+r)
 
 class Circle(Superellipse):
-  def __init__(self, r):
-    super().__init__(r, r, 2)
+    """
+    définit un cercle à partir d'une superellipse
+    """
+    def __init__(self, r):
+        super(Circle, self).__init__(r, r, 2)
 
-  @property
-  def perimeter(self):
-    return 2*math.pi*self.rx
-    
-    
-
+    @property
+    def perimeter(self):
+        """
+        retourne le préimètre d'un cercle
+        """
+        return 2*math.pi*self.rx
